@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmepfssdlqa1h"]
+
+[ext_resource type="Script" uid="uid://bb6ed5vje7paj" path="res://Scripts/main.gd" id="1_jjgbg"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_jjgbg")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://do6wcpaaq1au1")
+spawn_path = NodePath("..")
