@@ -11,9 +11,6 @@ func _ready() -> void:
 	else:
 		join_server()
 
-func check_cmdline_arg(arg: String) -> bool:
-	return not OS.get_cmdline_args().find(arg) == -1
-
 func host_server(port: int = 9999, networking_backend: NetworkingBackend = NetworkingBackend.ENet) -> void:
 	match networking_backend:
 		NetworkingBackend.ENet:
@@ -87,6 +84,7 @@ static func get_random_color() -> Color:
 	return Color.from_hsv(randf(), 0.8, 1.0)
 
 static func pretty_print_ip_interfaces() -> void:
+	print("")
 	print("--- Local Network Interfaces ---")
 	var interfaces: Array = IP.get_local_interfaces()
 	if interfaces.is_empty():
@@ -102,4 +100,7 @@ static func pretty_print_ip_interfaces() -> void:
 		print("Friendly: %s" % friendly)
 		print("IP(s):    %s" % ip_string)
 		print("------------------------------")
-	
+	print("")
+
+static func check_cmdline_arg(arg: String) -> bool:
+	return not OS.get_cmdline_args().find(arg) == -1
