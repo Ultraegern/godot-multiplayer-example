@@ -45,6 +45,7 @@ func host_server(port: int = 9999, networking_backend: NetworkingBackend = Netwo
 					remove_player(peer_id)
 					)
 			print("Started WebSocket server on port " + str(port))
+	pretty_print_ip_interfaces()
 
 func add_player(peer_id: int) -> void:
 	var player: Player = PLAYER.instantiate()
@@ -81,3 +82,27 @@ func join_server(port: int = 9999, address: String = "127.0.0.1", networking_bac
 				push_error(error)
 			multiplayer.multiplayer_peer = websocket_peer
 
+static func pretty_print_ip_interfaces() -> void:
+	print("--- Local Network Interfaces ---")
+	
+	# IP.get_local_interfaces() returns an Array of Dictionaries
+	# each dictionary contains keys like "name", "friendly", "ip", "index", etc.
+	var interfaces: Array = IP.get_local_interfaces()
+	
+	if interfaces.is_empty():
+		print("No local interfaces found.")
+		return
+
+	for interface in interfaces:
+		# Check if the dictionary has the expected keys and print them
+		var interface_name: String = interface.get("name", "N/A")
+		var friendly: String = interface.get("friendly", "N/A")
+		# The "ip" key contains an array of IP addresses (String[]), so we join them for display
+		var ip_addresses: Array = interface.get("ip", [])
+		var ip_string: String = ", ".join(ip_addresses)
+		
+		print("Name:     %s" % interface_name)
+		print("Friendly: %s" % friendly)
+		print("IP(s):    %s" % ip_string)
+		print("------------------------------")
+	
