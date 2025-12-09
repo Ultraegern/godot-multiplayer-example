@@ -12,7 +12,7 @@ const PLAYER: PackedScene = preload("uid://do6wcpaaq1au1")
 # Use ENet unless you are building for web
 enum NetworkingBackend {ENet, WebSocket, WebSocketSecure}
 
-func join_server(port: int = 9999, address: String = "127.0.0.1", networking_backend: NetworkingBackend = NetworkingBackend.ENet) -> void:
+func join_server(port: int = 9999, address: String = "127.0.0.1", player_info: PlayerInfo = PlayerInfo.create("123ABC"), networking_backend: NetworkingBackend = NetworkingBackend.ENet) -> void:
 	var peer: MultiplayerPeer
 	var error: Error
 	
