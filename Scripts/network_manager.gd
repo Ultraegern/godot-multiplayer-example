@@ -1,7 +1,13 @@
 extends Node
 class_name NetworkManager
 
+signal connected_to_server
+signal connection_failed
+signal server_disconnected
+
 const PLAYER: PackedScene = preload("uid://do6wcpaaq1au1")
+
+@onready var player_db: PlayerDB = PlayerDB.new()
 
 # Use ENet unless you are building for web
 enum NetworkingBackend {ENet, WebSocket, WebSocketSecure}
@@ -30,13 +36,14 @@ func join_server(port: int = 9999, address: String = "127.0.0.1", networking_bac
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
 
 func _on_connected_to_server() -> void:
+	connected_to_server.emit()
 	player_db.send_initial_info(PlayerInfo.create("123ABC"))
 
 func _on_connection_failed() -> void:
-	pass
+	connection_failed.emit()
 
 func _on_server_disconnected() -> void:
-	pass
+	server_disconnected.emit()
 
 func host_server(port: int = 9999, networking_backend: NetworkingBackend = NetworkingBackend.ENet, tls_options_only_for_WebSocketSecure: TLSOptions = null) -> void:
 	var peer: MultiplayerPeer
