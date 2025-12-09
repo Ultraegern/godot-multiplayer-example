@@ -7,6 +7,7 @@ func _overwrite_player_db(new_player_db: Dictionary[int, PlayerInfo]) -> void:
 	player_db = new_player_db
 
 func _update_player_db(peer_id: int, data: PlayerInfo) -> void:
+	data.multiplayer_id = peer_id
 	player_db[peer_id] = data
 
 # Calls receive_player_db() on every client. Called by the server to broadcast the full DB to every peer.

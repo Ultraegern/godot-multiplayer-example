@@ -1,6 +1,7 @@
 extends RefCounted
 class_name PlayerInfo
 
+@export var multiplayer_id: int = 0 # Server sets id when it recives PlayerInfo
 @export var nametag: String
 @export var color: Color
 
