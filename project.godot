@@ -24,7 +24,8 @@ window/size/viewport_height=1080
 
 folder_colors={
 "res://Scenes/": "green",
-"res://Scripts/": "red"
+"res://Scripts/": "red",
+"res://Scripts/Resources/": "orange"
 }
 
 [input]

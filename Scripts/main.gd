@@ -47,7 +47,6 @@ func host_server(port: int = 9999, networking_backend: NetworkingBackend = Netwo
 func add_player(peer_id: int) -> void:
 	var player: Player = PLAYER.instantiate()
 	player.name = str(peer_id)
-	player.modulate = get_random_color()
 	add_child(player)
 	print("Player " + str(peer_id) + " joined")
 
@@ -79,9 +78,6 @@ func join_server(port: int = 9999, address: String = "127.0.0.1", networking_bac
 			if not error == OK:
 				push_error(error)
 			multiplayer.multiplayer_peer = websocket_peer
-
-static func get_random_color() -> Color:
-	return Color.from_hsv(randf(), 0.8, 1.0)
 
 static func pretty_print_ip_interfaces() -> void:
 	print("")
