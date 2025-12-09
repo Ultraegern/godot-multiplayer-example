@@ -1,7 +1,6 @@
-extends Resource
+extends RefCounted
 class_name PlayerInfo
 
-@export var multiplayer_id: int
 @export var nametag: String
 @export var color: Color
 
