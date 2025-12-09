@@ -3,6 +3,8 @@ class_name Main
 
 const PLAYER: PackedScene = preload("uid://do6wcpaaq1au1")
 
+@onready var player_db: PlayerDB = $PlayerDB
+
 enum NetworkingBackend {ENet, WebSocket, WebSocketSecure}
 
 func _ready() -> void:
@@ -44,6 +46,13 @@ func host_server(port: int = 9999, networking_backend: NetworkingBackend = Netwo
 			print("Started WebSocket server on port " + str(port))
 	pretty_print_ip_interfaces()
 
+func _on_peer_connected(peer_id: int):
+	add_player(peer_id)
+	player_db._send_initial_db(peer_id)
+
+func _on_peer_disconnected(peer_id: int):
+	remove_player(peer_id)
+
 func add_player(peer_id: int) -> void:
 	var player: Player = PLAYER.instantiate()
 	player.name = str(peer_id)
@@ -78,34 +87,6 @@ func join_server(port: int = 9999, address: String = "127.0.0.1", networking_bac
 			if not error == OK:
 				push_error(error)
 			multiplayer.multiplayer_peer = websocket_peer
-class PlayerDB extends Node:
-	var player_db: Dictionary[int, PlayerInfo] = {}
-	
-	func _overwrite_player_db(new_player_db: Dictionary[int, PlayerInfo]) -> void:
-		player_db = new_player_db
-	
-	func _update_player_db(peer_id: int, data: PlayerInfo) -> void:
-		player_db[peer_id] = data
-	
-	# Calls receive_player_db() on every client. Called by the server to broadcast the full DB to every peer.
-	func _broadcast_player_db() -> void:
-		receive_player_db.rpc(player_db)
-	
-	# Runs on the client. Called by the server to broadcast the full DB.
-	@rpc("call_local", "reliable")
-	func receive_player_db(new_player_db: Dictionary[int, PlayerInfo]) -> void:
-		_overwrite_player_db(new_player_db)
-	
-	# Calls register_player_info()
-	func send_initial_info(player_info: PlayerInfo) -> void:
-		register_player_info.rpc_id(1, player_info) 
-	
-	# Runs on the server. Called by new peers to add their info.
-	@rpc("any_peer", "reliable")
-	func register_player_info(data: PlayerInfo) -> void:
-		_update_player_db(get_tree().multiplayer.get_calling_peer(), data)
-		_broadcast_player_db()
-
 func pretty_print_ip_interfaces() -> void:
 	print("")
 	print("--- Local Network Interfaces ---")
