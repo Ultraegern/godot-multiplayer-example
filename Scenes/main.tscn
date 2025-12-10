@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bb6ed5vje7paj" path="res://Scripts/main.gd" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://bt4abmx4sb0d8" path="res://Scenes/join_ui.tscn" id="2_bo1nx"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node"]
 script = ExtResource("1_jjgbg")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]

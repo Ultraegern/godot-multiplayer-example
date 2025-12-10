@@ -1,11 +1,6 @@
+@abstract
 extends Node
 class_name NetworkManager
-
-signal connected_to_server
-signal connection_failed
-signal server_disconnected
-
-const PLAYER: PackedScene = preload("uid://do6wcpaaq1au1")
 
 @onready var player_db: PlayerDB = PlayerDB.new()
 
@@ -31,19 +26,22 @@ func join_server(port: int = 9999, address: String = "127.0.0.1", player_info: P
 	
 	if not error == OK: push_error(error)
 	multiplayer.multiplayer_peer = peer
-	multiplayer.connected_to_server.connect(_on_connected_to_server)
+	multiplayer.connected_to_server.connect(
+		func(): 
+			player_db.send_initial_info(player_info)
+			_on_connected_to_server()
+			)
 	multiplayer.connection_failed.connect(_on_connection_failed)
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
 
-func _on_connected_to_server() -> void:
-	connected_to_server.emit()
-	player_db.send_initial_info(PlayerInfo.create("123ABC"))
+@abstract
+func _on_connected_to_server() -> void
 
-func _on_connection_failed() -> void:
-	connection_failed.emit()
+@abstract
+func _on_connection_failed() -> void
 
-func _on_server_disconnected() -> void:
-	server_disconnected.emit()
+@abstract
+func _on_server_disconnected() -> void
 
 func host_server(port: int = 9999, networking_backend: NetworkingBackend = NetworkingBackend.ENet, tls_options_only_for_WebSocketSecure: TLSOptions = null) -> void:
 	var peer: MultiplayerPeer
@@ -79,23 +77,19 @@ func host_server(port: int = 9999, networking_backend: NetworkingBackend = Netwo
 func _on_peer_connected(peer_id: int):
 	add_player(peer_id)
 	player_db._send_initial_db(peer_id)
+	print("Player " + str(peer_id) + " joined")
 
 func _on_peer_disconnected(peer_id: int):
 	remove_player(peer_id)
-
-func add_player(peer_id: int) -> void:
-	var player: Player = PLAYER.instantiate()
-	player.name = str(peer_id)
-	add_child(player)
-	print("Player " + str(peer_id) + " joined")
-
-func remove_player(peer_id: int) -> void:
-	var player: Node = get_node_or_null(str(peer_id))
-	if player:
-		player.queue_free()
 	print("Player " + str(peer_id) + " left")
 
-func pretty_print_ip_interfaces() -> void:
+@abstract
+func add_player(peer_id: int) -> void
+
+@abstract
+func remove_player(peer_id: int) -> void
+
+static func pretty_print_ip_interfaces() -> void:
 	print("")
 	print("--- Local Network Interfaces ---")
 	var interfaces: Array = IP.get_local_interfaces()
