@@ -2,7 +2,7 @@
 extends Node
 class_name NetworkManager
 
-@onready var player_db: PlayerDB = PlayerDB.new()
+var player_db: PlayerDB = PlayerDB.new()
 
 # Use ENet unless you are building for web
 enum NetworkingBackend {ENet, WebSocket, WebSocketSecure}
@@ -33,6 +33,9 @@ func join_server(port: int = 9999, address: String = "127.0.0.1", player_info: P
 			)
 	multiplayer.connection_failed.connect(_on_connection_failed)
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
+
+func _ready() -> void:
+	add_child(player_db)
 
 @abstract
 func _on_connected_to_server() -> void

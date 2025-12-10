@@ -4,6 +4,7 @@ class_name Main
 const PLAYER: PackedScene = preload("uid://do6wcpaaq1au1")
 
 func _ready() -> void:
+	add_child(player_db)
 	if OS.has_feature("dedicated_server") or check_cmdline_arg("--host"):
 		host_server()
 	else:
