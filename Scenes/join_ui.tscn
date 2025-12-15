@@ -28,6 +28,16 @@ layout_mode = 2
 [node name="Addres" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Addres"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Addres:"
+
+[node name="LineEdit" type="LineEdit" parent="PanelContainer/MarginContainer/VBoxContainer/Addres"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+placeholder_text = "127.0.0.11"
+
 [node name="Join" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Join"
