@@ -3,7 +3,8 @@ extends NetworkManager
 
 const PLAYER: PackedScene = preload("uid://do6wcpaaq1au1")
 
-@onready var address: LineEdit = $PanelContainer/MarginContainer/VBoxContainer/Address/Address
+@onready var address: LineEdit = $JoinUi/PanelContainer/MarginContainer/VBoxContainer/Address/Address
+@onready var join_ui: CanvasLayer = $JoinUi
 
 static func check_cmdline_arg(arg: String) -> bool:
 	return not OS.get_cmdline_args().find(arg) == -1
@@ -12,6 +13,7 @@ static func check_cmdline_arg(arg: String) -> bool:
 func _ready() -> void:
 	if OS.has_feature("dedicated_server") or check_cmdline_arg("--host"):
 		host_server()
+		join_ui.hide()
 
 
 func add_player(peer_id: int) -> void:
@@ -39,4 +41,5 @@ func _on_server_disconnected() -> void:
 
 
 func _on_join_pressed() -> void:
-	join_server(9999, address.text)
+	join_server(9999, address.text, NetworkingBackend.ENet)
+	join_ui.hide()
