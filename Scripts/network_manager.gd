@@ -2,8 +2,6 @@
 extends Node
 class_name NetworkManager
 
-var player_db: PlayerDB = PlayerDB.new()
-
 # Use ENet unless you are building for web
 enum NetworkingBackend {ENet, WebSocket, WebSocketSecure}
 
@@ -26,16 +24,9 @@ func join_server(port: int = 9999, address: String = "127.0.0.1", player_info: P
 	
 	if not error == OK: push_error(error)
 	multiplayer.multiplayer_peer = peer
-	multiplayer.connected_to_server.connect(
-		func(): 
-			player_db.send_initial_info(player_info)
-			_on_connected_to_server()
-			)
+	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.connection_failed.connect(_on_connection_failed)
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
-
-func _ready() -> void:
-	add_child(player_db)
 
 @abstract
 func _on_connected_to_server() -> void
@@ -79,7 +70,6 @@ func host_server(port: int = 9999, networking_backend: NetworkingBackend = Netwo
 
 func _on_peer_connected(peer_id: int):
 	add_player(peer_id)
-	player_db._send_initial_db(peer_id)
 	print("Player " + str(peer_id) + " joined")
 
 func _on_peer_disconnected(peer_id: int):
