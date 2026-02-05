@@ -12,7 +12,7 @@ spawn_path = NodePath("..")
 
 [node name="JoinUi" parent="." unique_id=1547642127 instance=ExtResource("2_bo1nx")]
 
-[node name="PanelContainer" parent="JoinUi" index="0"]
+[node name="PanelContainer" parent="JoinUi" index="0" unique_id=991959062]
 offset_left = -73.5
 offset_top = -41.0
 offset_right = 73.5
