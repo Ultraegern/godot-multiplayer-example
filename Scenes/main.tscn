@@ -1,16 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://cmepfssdlqa1h"]
+[gd_scene format=3 uid="uid://cmepfssdlqa1h"]
 
 [ext_resource type="Script" uid="uid://bb6ed5vje7paj" path="res://Scripts/main.gd" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://bt4abmx4sb0d8" path="res://Scenes/join_ui.tscn" id="2_bo1nx"]
 
-[node name="Main" type="Node"]
+[node name="Main" type="Node" unique_id=1728089529]
 script = ExtResource("1_jjgbg")
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=196234297]
 _spawnable_scenes = PackedStringArray("uid://do6wcpaaq1au1")
 spawn_path = NodePath("..")
 
-[node name="JoinUi" parent="." instance=ExtResource("2_bo1nx")]
+[node name="JoinUi" parent="." unique_id=1547642127 instance=ExtResource("2_bo1nx")]
 
 [node name="PanelContainer" parent="JoinUi" index="0"]
 offset_left = -73.5
@@ -18,12 +18,12 @@ offset_top = -41.0
 offset_right = 73.5
 offset_bottom = 41.0
 
-[node name="Label" type="Label" parent="JoinUi/PanelContainer/MarginContainer/VBoxContainer/Addres" index="0"]
+[node name="Label2" type="Label" parent="JoinUi/PanelContainer/MarginContainer/VBoxContainer/Addres" index="0" unique_id=1791346644]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Addres:"
 
-[node name="LineEdit" type="LineEdit" parent="JoinUi/PanelContainer/MarginContainer/VBoxContainer/Addres" index="1"]
+[node name="LineEdit2" type="LineEdit" parent="JoinUi/PanelContainer/MarginContainer/VBoxContainer/Addres" index="1" unique_id=225755776]
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
 placeholder_text = "127.0.0.11"
