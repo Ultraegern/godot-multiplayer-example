@@ -65,7 +65,7 @@ func host_server(port: int = 9999, networking_backend: NetworkingBackend = Netwo
 		NetworkingBackend.WebSocketSecure:
 			peer = WebSocketMultiplayerPeer.new()
 			if tls_options_only_for_WebSocketSecure == null:
-				push_error("Cannot start WebSocketSecure (WSS) server. The 'tls_options_only_for_WebSocketSecure' parameter is NULL. Please provide a valid TLSOptions object (containing the server certificate and key files) to enable TLS encryption.")
+				push_error("Cannot start WebSocketSecure (wss://) server. The 'tls_options_only_for_WebSocketSecure' parameter is NULL. Please provide a valid TLSOptions object (containing the server certificate and key files) to enable TLS encryption.")
 				error = ERR_INVALID_PARAMETER
 			else:
 				error = peer.create_server(port, tls_options_only_for_WebSocketSecure)
