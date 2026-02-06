@@ -81,8 +81,6 @@ func host_server(port: int = 9999, networking_backend: NetworkingBackend = Netwo
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 
-	pretty_print_ip_interfaces()
-
 
 @abstract
 func add_player(peer_id: int) -> void

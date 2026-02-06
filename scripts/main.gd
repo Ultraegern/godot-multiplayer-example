@@ -17,6 +17,7 @@ static func check_cmdline_arg(arg: String) -> bool:
 func _ready() -> void:
 	if OS.has_feature("dedicated_server") or check_cmdline_arg("--host"):
 		host_server(PORT, NETWORKING_BACKEND)
+		pretty_print_ip_interfaces()
 		join_ui.hide()
 
 
