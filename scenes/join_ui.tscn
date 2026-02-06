@@ -36,7 +36,7 @@ text = "Addres:"
 [node name="Address" type="LineEdit" parent="PanelContainer/MarginContainer/VBoxContainer/Address" unique_id=1847403588]
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
-placeholder_text = "127.0.0.1"
+placeholder_text = "localhost"
 
 [node name="Join" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1145714309]
 layout_mode = 2

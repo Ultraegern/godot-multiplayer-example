@@ -46,7 +46,8 @@ func _on_server_disconnected() -> void:
 
 
 func _on_join_pressed() -> void:
-	join_server(PORT, address.text, NETWORKING_BACKEND)
+	var address: String = address.text if not address.text == "" else "localhost"
+	join_server(PORT, address, NETWORKING_BACKEND)
 
 
 func _on_host_disconnected_exit_pressed() -> void:
