@@ -2,6 +2,8 @@ class_name Main
 extends NetworkManager
 
 const PLAYER: PackedScene = preload("uid://do6wcpaaq1au1")
+const PORT: int = 9999
+const NETWORKING_BACKEND: NetworkingBackend = NetworkingBackend.ENet
 
 @onready var address: LineEdit = $Ui/JoinUi/PanelContainer/MarginContainer/VBoxContainer/Address/Address
 @onready var join_ui: CanvasLayer = $Ui/JoinUi
@@ -14,7 +16,7 @@ static func check_cmdline_arg(arg: String) -> bool:
 
 func _ready() -> void:
 	if OS.has_feature("dedicated_server") or check_cmdline_arg("--host"):
-		host_server()
+		host_server(PORT, NETWORKING_BACKEND)
 		join_ui.hide()
 
 
@@ -44,7 +46,7 @@ func _on_server_disconnected() -> void:
 
 
 func _on_join_pressed() -> void:
-	join_server(9999, address.text, NetworkingBackend.ENet)
+	join_server(PORT, address.text, NETWORKING_BACKEND)
 
 
 func _on_host_disconnected_exit_pressed() -> void:
