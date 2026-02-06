@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://bu5u2s4b8kwne"]
+
+[node name="ConnectionFailedUi" type="CanvasLayer" unique_id=1928390493]
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=991959062]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=403094595]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=699915409]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1038673594]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Connection Failed"
+
+[node name="Ok" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1145714309]
+layout_mode = 2
+text = "Ok"

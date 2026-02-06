@@ -42,7 +42,7 @@ func join_server(port: int = 9999, address: String = "127.0.0.1", networking_bac
 			error = peer.create_client("wss://" + address + ":" + str(port))
 
 	if not error == OK:
-		push_error(error)
+		push_error("Error nr " + str(error))
 	multiplayer.multiplayer_peer = peer
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.connection_failed.connect(_on_connection_failed)
@@ -72,7 +72,7 @@ func host_server(port: int = 9999, networking_backend: NetworkingBackend = Netwo
 			print("Started WebSocketSecure server on port " + str(port))
 
 	if not error == OK:
-		push_error(error)
+		push_error("Error nr " + str(error))
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)

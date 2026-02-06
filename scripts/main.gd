@@ -3,8 +3,10 @@ extends NetworkManager
 
 const PLAYER: PackedScene = preload("uid://do6wcpaaq1au1")
 
-@onready var address: LineEdit = $JoinUi/PanelContainer/MarginContainer/VBoxContainer/Address/Address
-@onready var join_ui: CanvasLayer = $JoinUi
+@onready var address: LineEdit = $Ui/JoinUi/PanelContainer/MarginContainer/VBoxContainer/Address/Address
+@onready var join_ui: CanvasLayer = $Ui/JoinUi
+@onready var host_disconnected_ui: CanvasLayer = $Ui/HostDisconnectedUi
+@onready var connection_failed_ui: CanvasLayer = $Ui/ConnectionFailedUi
 
 static func check_cmdline_arg(arg: String) -> bool:
 	return not OS.get_cmdline_args().find(arg) == -1
@@ -29,17 +31,26 @@ func remove_player(peer_id: int) -> void:
 
 
 func _on_connected_to_server() -> void:
-	pass
+	join_ui.hide()
 
 
 func _on_connection_failed() -> void:
-	pass
+	join_ui.hide()
+	connection_failed_ui.show()
 
 
 func _on_server_disconnected() -> void:
-	pass
+	host_disconnected_ui.show()
 
 
 func _on_join_pressed() -> void:
 	join_server(9999, address.text, NetworkingBackend.ENet)
-	join_ui.hide()
+
+
+func _on_host_disconnected_exit_pressed() -> void:
+	get_tree().quit()
+
+
+func _on_connection_failed_ok_pressed() -> void:
+	connection_failed_ui.hide()
+	join_ui.show()

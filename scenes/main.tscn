@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bb6ed5vje7paj" path="res://scripts/main.gd" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://bt4abmx4sb0d8" path="res://scenes/join_ui.tscn" id="2_bo1nx"]
+[ext_resource type="PackedScene" uid="uid://c2vlbodcbitvd" path="res://scenes/host_disconnected_ui.tscn" id="3_sugp2"]
+[ext_resource type="PackedScene" uid="uid://bu5u2s4b8kwne" path="res://scenes/connection_failed_ui.tscn" id="4_jyhfs"]
 
 [node name="Main" type="Node" unique_id=1728089529]
 script = ExtResource("1_jjgbg")
@@ -10,14 +12,26 @@ script = ExtResource("1_jjgbg")
 _spawnable_scenes = PackedStringArray("uid://do6wcpaaq1au1")
 spawn_path = NodePath("..")
 
-[node name="JoinUi" parent="." unique_id=1547642127 instance=ExtResource("2_bo1nx")]
+[node name="Ui" type="Node" parent="." unique_id=810052575]
 
-[node name="PanelContainer" parent="JoinUi" index="0" unique_id=991959062]
+[node name="JoinUi" parent="Ui" unique_id=1547642127 instance=ExtResource("2_bo1nx")]
+
+[node name="PanelContainer" parent="Ui/JoinUi" index="0" unique_id=991959062]
 offset_left = -73.5
 offset_top = -41.0
 offset_right = 73.5
 offset_bottom = 41.0
 
-[connection signal="pressed" from="JoinUi/PanelContainer/MarginContainer/VBoxContainer/Join" to="." method="_on_join_pressed"]
+[node name="HostDisconnectedUi" parent="Ui" unique_id=1928390493 instance=ExtResource("3_sugp2")]
+visible = false
 
-[editable path="JoinUi"]
+[node name="ConnectionFailedUi" parent="Ui" unique_id=355719442 instance=ExtResource("4_jyhfs")]
+visible = false
+
+[connection signal="pressed" from="Ui/JoinUi/PanelContainer/MarginContainer/VBoxContainer/Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="Ui/HostDisconnectedUi/PanelContainer/MarginContainer/VBoxContainer/Exit" to="." method="_on_host_disconnected_exit_pressed"]
+[connection signal="pressed" from="Ui/ConnectionFailedUi/PanelContainer/MarginContainer/VBoxContainer/Ok" to="." method="_on_connection_failed_ok_pressed"]
+
+[editable path="Ui/JoinUi"]
+[editable path="Ui/HostDisconnectedUi"]
+[editable path="Ui/ConnectionFailedUi"]
