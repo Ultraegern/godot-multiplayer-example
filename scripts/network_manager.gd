@@ -26,7 +26,7 @@ static func pretty_print_ip_interfaces() -> void:
 	print("")
 
 
-func join_server(port: int = 9999, address: String = "127.0.0.1", networking_backend: NetworkingBackend = NetworkingBackend.ENet) -> void:
+func join_server(port: int = 9999, address: String = "127.0.0.1", networking_backend: NetworkingBackend = NetworkingBackend.ENet, tls_options_only_for_WebSocketSecure: TLSOptions = null) -> void:
 	var peer: MultiplayerPeer
 	var error: Error
 
@@ -39,7 +39,11 @@ func join_server(port: int = 9999, address: String = "127.0.0.1", networking_bac
 			error = peer.create_client("ws://" + address + ":" + str(port))
 		NetworkingBackend.WebSocketSecure:
 			peer = WebSocketMultiplayerPeer.new()
-			error = peer.create_client("wss://" + address + ":" + str(port))
+			if tls_options_only_for_WebSocketSecure == null:
+				push_error("Cannot start WebSocketSecure (wss://) server. The 'tls_options_only_for_WebSocketSecure' parameter is NULL. Please provide a valid TLSOptions object (containing the server certificate and key files) to enable TLS encryption.")
+				error = ERR_INVALID_PARAMETER
+			else:
+				error = peer.create_client("wss://" + address + ":" + str(port), tls_options_only_for_WebSocketSecure)
 
 	if not error == OK:
 		push_error("Error nr " + str(error))
